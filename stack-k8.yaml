@@ -1,0 +1,37 @@
+apiVersion: pulumi.com/v1
+kind: Stack
+metadata:
+  name: operator-demo-k8
+spec:
+  envRefs:
+    PULUMI_ACCESS_TOKEN:
+      type: Secret
+      secret:
+        name: pulumi-deployment-creds
+        key: accessToken
+    ARM_CLIENT_ID:
+      type: Secret
+      secret:
+        name: pulumi-deployment-creds
+        key: azureAppId
+    ARM_CLIENT_SECRET:
+      type: Secret
+      secret:
+        name: pulumi-deployment-creds
+        key: azurePassword
+    ARM_TENANT_ID:
+      type: Secret
+      secret:
+        name: pulumi-deployment-creds
+        key: azureTenant
+    ARM_SUBSCRIPTION_ID:
+      type: Literal
+      literal:
+        value: "469048f1-92af-4c71-a63b-330ec31d2b82"
+  stack: samcogan/operator-demo/op-demo-k8
+  projectRepo: https://github.com/sam-cogan/pulumi-operator-demo
+  branch: "refs/heads/main"
+  destroyOnFinalize: true
+  continueResyncOnCommitMatch: true
+  refresh: true
+  resyncFrequencySeconds: 60
